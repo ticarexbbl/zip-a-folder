@@ -4,7 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const zipafolder = require("../lib/zip-a-folder");
 
-describe("Zip-A-Folder Test", function() {
+describe("Zip-A-Folder Test", function () {
   let testasync = path.resolve(__dirname, "testasync.zip");
   let testcallback = path.resolve(__dirname, "testcallback.zip");
   let testnotexisting = path.resolve(__dirname, "/notexisting/testcallback.zip");
@@ -18,14 +18,14 @@ describe("Zip-A-Folder Test", function() {
     }
   });
 
-  it("ASYNC: Zip test folder", async function() {
+  it("ASYNC: Zip test folder", async function () {
     expect.assertions(1);
     await zipafolder.zip(path.resolve(__dirname, "data/"), testasync);
 
     expect(fs.existsSync(testasync)).toBe(true);
   });
 
-  it("ASYNC: Zip test folder failing", async function() {
+  it("ASYNC: Zip test folder failing", async function () {
     expect.assertions(1);
     try {
       await zipafolder.zip(path.resolve(__dirname, "notexisting/"), testasync);
@@ -34,7 +34,7 @@ describe("Zip-A-Folder Test", function() {
     }
   });
 
-  it("ASYNC: Zip test folder into a zipfile in a notexisting folder", async function() {
+  it("ASYNC: Zip test folder into a zipfile in a notexisting folder", async function () {
     expect.assertions(1);
 
     try {
@@ -44,10 +44,11 @@ describe("Zip-A-Folder Test", function() {
     }
   });
 
-  it("CALLBACK: Zip test folder", function() {
-    zipafolder.zipFolder(
-      path.resolve(__dirname, "data/"),
-      testcallback,
+  it("CALLBACK: Zip test folder", function () {
+    zipafolder.zipFolder({
+        inPath: path.resolve(__dirname, "data/"),
+        outPath: testcallback
+      },
       () => {
         expect(fs.existsSync(testcallback)).toBe(true);
       }
